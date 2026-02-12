@@ -1,0 +1,14 @@
+{
+  "name": "backend-portfolio-api",
+  "version": "1.0.0",
+  "description": "Professional TypeScript Express API",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "ts-node-dev --respawn src/index.ts",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
