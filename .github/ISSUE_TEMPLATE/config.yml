@@ -1,0 +1,18 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: "🌐 Local Environment"
+    url: http://localhost:3000
+    about: "Developer shortcut: Open your local dev server."
+
+  - name: "💬 Discussions"
+    url: https://github.com/seanbuckle/caseworker-api/discussions
+    about: "Have a question or a general idea? Start a conversation here."
+
+  - name: "🛡️ Report a Security Vulnerability"
+    url: https://github.com/seanbuckle/caseworker-api/security/advisories/new
+    about: "Report security bugs privately to keep the project safe."
+
+  - name: "📖 API Documentation"
+    url: https://github.com/seanbuckle/caseworker-api#readme
+    about: "View the setup guide and technical documentation."

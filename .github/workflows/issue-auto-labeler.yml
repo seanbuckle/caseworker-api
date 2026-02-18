@@ -1,0 +1,50 @@
+name: "Issue Auto-Labeller"
+on:
+    issues:
+        types: [opened, edited]
+
+jobs:
+    label_issues:
+        runs-on: ubuntu-latest
+        permissions:
+            issues: write
+        steps:
+            - name: "Apply Labels based on Content"
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      const { title, body } = context.payload.issue;
+                      const content = (title + " " + body).toLowerCase();
+                      const labelsToAdd = [];
+
+                      // Mapping keywords to your specific label names
+                      if (content.includes("bug") || content.includes("error") || content.includes("fix")) labelsToAdd.push("fix");
+                      if (content.includes("feature") || content.includes("feat") || content.includes("add")) labelsToAdd.push("feat");
+                      if (content.includes("security") || content.includes("vulnerability")) labelsToAdd.push("security");
+                      if (content.includes("urgent") || content.includes("priority") || content.includes("critical")) labelsToAdd.push("priority: high");
+                      if (content.includes("refactor") || content.includes("clean")) labelsToAdd.push("refactor");
+                      if (content.includes("test")) labelsToAdd.push("test");
+                      if (content.includes("doc") || content.includes("readme")) labelsToAdd.push("docs");
+
+                      // Status labels based on keywords
+                      if (content.includes("wip") || content.includes("working on")) labelsToAdd.push("in-progress");
+                      if (content.includes("hold") || content.includes("waiting")) labelsToAdd.push("on-hold");
+
+                      if (labelsToAdd.length > 0) {
+                        await github.rest.issues.addLabels({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: context.payload.issue.number,
+                          labels: labelsToAdd
+                        });
+                      }
+            - name: "Auto-assign creator"
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      await github.rest.issues.addAssignees({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        issue_number: context.payload.issue.number,
+                        assignees: [context.payload.issue.user.login]
+                      });
