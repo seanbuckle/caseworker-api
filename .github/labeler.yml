@@ -29,4 +29,4 @@ in-progress:
     - branch: ["wip/**"]
 
 on-hold:
-    - branch: ["hold/**", "draft/**"]
+    - branch: ["hold/**", "draft/**"] 
