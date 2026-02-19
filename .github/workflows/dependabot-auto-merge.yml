@@ -26,3 +26,8 @@ jobs:
               env:
                   PR_URL: ${{github.event.pull_request.html_url}}
                   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+            - name: Debug Metadata
+              run: |
+                  echo "Update Type: ${{ steps.metadata.outputs.update-type }}"
+                  echo "Ecosystem: ${{ steps.metadata.outputs.package-ecosystem }}"
