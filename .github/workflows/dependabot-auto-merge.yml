@@ -17,8 +17,9 @@ jobs:
                   github-token: "${{ secrets.GITHUB_TOKEN }}"
 
             - name: Approve and Enable Auto-Merge
-              # Only auto-merge patch and minor updates to avoid breaking changes
-              if: steps.metadata.outputs.update-type != 'version-update:semver-major'
+              if: |
+                  steps.metadata.outputs.update-type != 'version-update:semver-major' ||
+                  steps.metadata.outputs.package-ecosystem == 'github_actions'
               run: |
                   gh pr review --approve "$PR_URL"
                   gh pr merge --auto --squash "$PR_URL"
