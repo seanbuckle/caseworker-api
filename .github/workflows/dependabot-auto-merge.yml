@@ -16,6 +16,11 @@ jobs:
               with:
                   github-token: "${{ secrets.GITHUB_TOKEN }}"
 
+            - name: Debug Metadata
+              run: |
+                  echo "Update Type: ${{ steps.metadata.outputs.update-type }}"
+                  echo "Ecosystem: ${{ steps.metadata.outputs.package-ecosystem }}"
+
             - name: Approve and Enable Auto-Merge
               if: |
                   steps.metadata.outputs.update-type != 'version-update:semver-major' ||
