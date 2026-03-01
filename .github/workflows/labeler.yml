@@ -1,16 +1,24 @@
 name: "Auto Labeller"
 on:
-  - pull_request
+    - pull_request
 
 jobs:
-  triage:
-    permissions:
-      contents: read
-      pull-requests: write
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/labeler@v6
-        with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          configuration-path: .github/labeler.yml
-          sync-labels: true
+    triage:
+        permissions:
+            contents: read
+            pull-requests: write
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/labeler@v6
+              id: label-process
+              with:
+                  repo-token: "${{ secrets.GITHUB_TOKEN }}"
+                  configuration-path: .github/labeler.yml
+                  sync-labels: true
+
+            - name: Verify Branch Naming
+              run: |
+                  if [ "${{ steps.label-process.outputs.new-labels }}" == "" ] && [ "${{ steps.label-process.outputs.all-labels }}" == "" ]; then
+                    echo "❌ Error: Branch name does not follow conventions (feat/, fix/, chore/, etc.)"
+                    exit 1
+                  fi

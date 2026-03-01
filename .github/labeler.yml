@@ -30,3 +30,7 @@ in-progress:
 
 on-hold:
     - head-branch: ["^hold/.*", "^draft/.*"] 
+
+"⚠️ needs-naming-fix":
+  - head-branch:
+      - "^(?!(feat/|fix/|chore/|docs/|refactor/|test/|security/|dependabot/)).*"
