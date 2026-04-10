@@ -10,7 +10,7 @@ jobs:
             issues: write
         steps:
             - name: "Apply Labels based on Content"
-              uses: actions/github-script@v8
+              uses: actions/github-script@v9
               with:
                   script: |
                       const { title, body } = context.payload.issue;
@@ -39,7 +39,7 @@ jobs:
                         });
                       }
             - name: "Auto-assign creator"
-              uses: actions/github-script@v8
+              uses: actions/github-script@v9
               with:
                   script: |
                       await github.rest.issues.addAssignees({
